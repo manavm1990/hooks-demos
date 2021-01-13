@@ -9,12 +9,20 @@ const App: React.FC = () => (
       <meta name="theme-color" content="#00b800" />
     </Helmet>
 
-    <h1>How fast do you type?</h1>
-    <textarea />
-    <p>
-      Time Remaining: <span>10</span>
-      <button>Start!</button>
-    </p>
+    <main className="flex flex-col items-center">
+      <h1 className="my-6 text-2xl text-computer-green">
+        How fast do you type?
+      </h1>
+      <textarea className="bg-gray-400 h-80 w-4/12" />
+      <p className="flex flex-col items-center text-computer-green">
+        <p className="my-6">
+          Time Remaining: <span>10</span>
+        </p>
+        <button className="bg-computer-green px-6 py-3 text-black uppercase">
+          Start!
+        </button>
+      </p>
+    </main>
   </>
 );
 
