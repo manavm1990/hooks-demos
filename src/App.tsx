@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { calcNumOfWords } from "./lib";
 
 const App: React.FC = () => {
   const [textareaTxt, setTextareaTxt] = useState<string>("");
 
-  console.log(textareaTxt);
   return (
     <>
       <Helmet>
@@ -27,7 +27,10 @@ const App: React.FC = () => {
           <p className="my-6">
             Time Remaining: <span>10</span>
           </p>
-          <button className="bg-computer-green px-6 py-3 text-black uppercase">
+          <button
+            className="bg-computer-green px-6 py-3 text-black uppercase"
+            onClick={() => console.log(calcNumOfWords(textareaTxt))}
+          >
             Start!
           </button>
         </div>
