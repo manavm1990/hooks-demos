@@ -23,14 +23,14 @@ const App: React.FC = () => {
           onChange={(e) => setTextareaTxt(e.target.value)}
           // TODO: Add `value={textAreaTxt}`
         />
-        <p className="flex flex-col items-center text-computer-green">
+        <div className="flex flex-col items-center text-computer-green">
           <p className="my-6">
             Time Remaining: <span>10</span>
           </p>
           <button className="bg-computer-green px-6 py-3 text-black uppercase">
             Start!
           </button>
-        </p>
+        </div>
       </main>
     </>
   );
