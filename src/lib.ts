@@ -1,2 +1,2 @@
 export const calcNumOfWords = (txt: string): number =>
-  txt.trim().split(" ").length;
+  !txt ? 0 : txt.trim().split(" ").length;
