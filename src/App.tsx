@@ -7,20 +7,28 @@ const App: React.FC = () => {
   const [running, setRunning] = useState<boolean>(false);
   const [textareaTxt, setTextareaTxt] = useState<string>("");
   const [timeRemaining, setTimeRemaining] = useState<number>(3);
+  const [wordCount, setWordCount] = useState<number | string>("N/A");
+
+  function init() {
+    setRunning((prev) => !prev);
+    setTimeRemaining(3);
+    setTextareaTxt("");
+    setWordCount("N/A");
+  }
 
   // use 'side' effects - an external timer
   // run on render
   useEffect(() => {
-    if (running) {
-      const timeoutId = setTimeout(() => {
+    if (timeRemaining && running) {
+      // TODO: Consider if memory 🧠 leak
+      setTimeout(() => {
         setTimeRemaining((prev) => prev - 1);
       }, 1000);
-
-      if (timeRemaining === 0) {
-        setRunning(false);
-        clearTimeout(timeoutId);
-        console.log(calcNumOfWords(textareaTxt));
-      }
+    }
+    if (!timeRemaining) {
+      setRunning(false);
+      // setTimeRemaining(3);
+      setWordCount(calcNumOfWords(textareaTxt));
     }
   }, [running, timeRemaining, textareaTxt]);
 
@@ -47,14 +55,14 @@ const App: React.FC = () => {
           </p>
           <button
             className="bg-computer-green px-6 py-3 text-black uppercase disabled:opacity-50"
-            onClick={() => {
-              setRunning((prev) => !prev);
-            }}
+            onClick={init}
             disabled={running}
           >
             Start!
           </button>
         </div>
+
+        <p className="my-6 text-computer-green">Word Count:&nbsp;{wordCount}</p>
       </main>
     </>
   );
