@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { calcNumOfWords } from "./lib";
 
 const App: React.FC = () => {
   const [textareaTxt, setTextareaTxt] = useState<string>("");
   const [timeRemaining, setTimeRemaining] = useState<number>(3);
+
+  // use 'side' effects - an external timer
+  // run on render
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setTimeRemaining((prev) => prev - 1);
+    }, 1000);
+
+    if (timeRemaining === 0) {
+      clearTimeout(timeoutId);
+    }
+  });
 
   return (
     <>
