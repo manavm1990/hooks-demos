@@ -1,2 +1,4 @@
-export const calcNumOfWords = (txt: string): number =>
-  !txt ? 0 : txt.trim().split(" ").length;
+export const calcNumOfWords = (txt: string): number => {
+  const trimmedTxt = txt.trim();
+  return !trimmedTxt ? 0 : trimmedTxt.split(" ").length;
+};
