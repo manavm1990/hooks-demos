@@ -3,20 +3,26 @@ import { Helmet } from "react-helmet-async";
 import { calcNumOfWords } from "./lib";
 
 const App: React.FC = () => {
+  // TODO: Refactor ♻️ into a state machine (or use xstate)
+  const [running, setRunning] = useState<boolean>(false);
   const [textareaTxt, setTextareaTxt] = useState<string>("");
   const [timeRemaining, setTimeRemaining] = useState<number>(3);
 
   // use 'side' effects - an external timer
   // run on render
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setTimeRemaining((prev) => prev - 1);
-    }, 1000);
+    if (running) {
+      const timeoutId = setTimeout(() => {
+        setTimeRemaining((prev) => prev - 1);
+      }, 1000);
 
-    if (timeRemaining === 0) {
-      clearTimeout(timeoutId);
+      if (timeRemaining === 0) {
+        setRunning(false);
+        clearTimeout(timeoutId);
+        console.log(calcNumOfWords(textareaTxt));
+      }
     }
-  });
+  }, [running, timeRemaining, textareaTxt]);
 
   return (
     <>
@@ -40,8 +46,11 @@ const App: React.FC = () => {
             Time Remaining: <span>{timeRemaining}</span>
           </p>
           <button
-            className="bg-computer-green px-6 py-3 text-black uppercase"
-            onClick={() => console.log(calcNumOfWords(textareaTxt))}
+            className="bg-computer-green px-6 py-3 text-black uppercase disabled:opacity-50"
+            onClick={() => {
+              setRunning((prev) => !prev);
+            }}
+            disabled={running}
           >
             Start!
           </button>
