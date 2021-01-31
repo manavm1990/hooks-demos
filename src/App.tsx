@@ -4,6 +4,7 @@ import { calcNumOfWords } from "./lib";
 
 const App: React.FC = () => {
   const [textareaTxt, setTextareaTxt] = useState<string>("");
+  const [timeRemaining, setTimeRemaining] = useState<number>(3);
 
   return (
     <>
@@ -24,7 +25,7 @@ const App: React.FC = () => {
         />
         <div className="flex flex-col items-center text-computer-green">
           <p className="my-6">
-            Time Remaining: <span>10</span>
+            Time Remaining: <span>{timeRemaining}</span>
           </p>
           <button
             className="bg-computer-green px-6 py-3 text-black uppercase"
