@@ -21,7 +21,6 @@ const App: React.FC = () => {
         <textarea
           className="bg-gray-400 h-80 w-4/12"
           onChange={(e) => setTextareaTxt(e.target.value)}
-          // TODO: Add `value={textAreaTxt}`
         />
         <div className="flex flex-col items-center text-computer-green">
           <p className="my-6">
