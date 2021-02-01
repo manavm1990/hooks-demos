@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { calcNumOfWords } from "lib";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { calcNumOfWords } from "./lib";
 
 const App: React.FC = () => {
+  // Persist data w/o re-render
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Must specify 'null' when directly assigning to 'current'
+  const timeoutRef = useRef<null | number>(null);
+
   // TODO: Refactor ♻️ into a state machine (or use xstate)
   const [running, setRunning] = useState<boolean>(false);
   const [textareaTxt, setTextareaTxt] = useState<string>("");
@@ -13,6 +19,11 @@ const App: React.FC = () => {
     setRunning((prev) => !prev);
     setTimeRemaining(3);
     setTextareaTxt("");
+    console.log(textareaRef.current);
+    if (textareaRef.current) {
+      textareaRef.current.disabled = false;
+      textareaRef.current.focus();
+    }
     setWordCount("N/A");
   }
 
@@ -20,16 +31,21 @@ const App: React.FC = () => {
   // run on render
   useEffect(() => {
     if (timeRemaining && running) {
-      // TODO: Consider if memory 🧠 leak
-      setTimeout(() => {
+      timeoutRef.current = window.setTimeout(() => {
         setTimeRemaining((prev) => prev - 1);
       }, 1000);
-    }
-    if (!timeRemaining) {
+    } else if (!timeRemaining) {
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
+      }
       setRunning(false);
-      // setTimeRemaining(3);
       setWordCount(calcNumOfWords(textareaTxt));
     }
+    return () => {
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
   }, [running, timeRemaining, textareaTxt]);
 
   return (
@@ -46,8 +62,12 @@ const App: React.FC = () => {
           How fast do you type?
         </h1>
         <textarea
-          className="bg-gray-400 h-80 w-4/12"
+          className="bg-gray-400 h-80 w-4/12 placeholder-white disabled:opacity-50"
           onChange={(e) => setTextareaTxt(e.target.value)}
+          disabled={!running}
+          placeholder={running ? "" : "Press 'Start!'👇🏾 and start typing ⌨️ 🔥"}
+          ref={textareaRef}
+          value={textareaTxt}
         />
         <div className="flex flex-col items-center text-computer-green">
           <p className="my-6">
