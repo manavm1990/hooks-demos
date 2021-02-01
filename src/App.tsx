@@ -59,7 +59,7 @@ const App: React.FC = () => {
 
       <main className="flex flex-col items-center">
         <h1 className="my-6 text-2xl text-computer-green">
-          How fast do you type?
+          How Fast Do You Type?
         </h1>
         <textarea
           className="bg-gray-400 h-80 w-4/12 placeholder-white disabled:opacity-50"
