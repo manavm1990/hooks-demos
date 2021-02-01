@@ -19,7 +19,6 @@ const App: React.FC = () => {
     setRunning((prev) => !prev);
     setTimeRemaining(3);
     setTextareaTxt("");
-    console.log(textareaRef.current);
     if (textareaRef.current) {
       textareaRef.current.disabled = false;
       textareaRef.current.focus();
