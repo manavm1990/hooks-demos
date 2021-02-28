@@ -1,1 +1,2 @@
-export const calcWPM = (txt) => Math.round(txt.split("").length / 5);
+export const calcWPM = (txt, secs = 60) =>
+  Math.round(txt.split("").length / 5) * (60 / secs);
