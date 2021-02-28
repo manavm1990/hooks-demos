@@ -1,11 +1,14 @@
+import { useRef } from "react";
 import TimerForm from "./TimerForm";
 import TypingArea from "./TypingArea";
 
 function Main() {
+  const textAreaRef = useRef();
+
   return (
     <main className="flex flex-col gap-4 items-center mx-auto w-96">
-      <TimerForm />
-      <TypingArea />
+      <TimerForm textAreaRef={textAreaRef} />
+      <TypingArea ref={textAreaRef} />
     </main>
   );
 }

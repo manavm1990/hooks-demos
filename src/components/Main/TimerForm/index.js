@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Form from "./Form";
 import Info from "./Info";
 
-function TimerForm() {
+function TimerForm({ textAreaRef }) {
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [wpm, setWpm] = useState(null);
 
@@ -19,6 +20,9 @@ function TimerForm() {
   function handleSubmit(event) {
     event.preventDefault();
     setTimeRemaining(event.target.elements[0].value);
+
+    textAreaRef.current.disabled = false;
+    textAreaRef.current.focus();
   }
 
   return (
@@ -28,5 +32,13 @@ function TimerForm() {
     </>
   );
 }
+
+TimerForm.propTypes = {
+  textAreaRef: PropTypes.object,
+};
+
+TimerForm.defaultProps = {
+  textAreaRef: null,
+};
 
 export default TimerForm;
