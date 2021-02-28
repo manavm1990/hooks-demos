@@ -15,10 +15,15 @@ function TimerForm({ textAreaRef }) {
 
       return () => clearInterval(intervalId);
     } else {
+    }
+  }, [timeRemaining]);
+
+  useEffect(() => {
+    if (!timeRemaining) {
       textAreaRef.current.blur();
       textAreaRef.current.disabled = true;
     }
-  }, [textAreaRef, timeRemaining]);
+  });
 
   function handleSubmit(event) {
     event.preventDefault();
