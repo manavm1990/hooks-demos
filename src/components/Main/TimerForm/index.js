@@ -1,9 +1,9 @@
+import { calcWPM } from "lib";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Form from "./Form";
 import Info from "./Info";
-
-function TimerForm({ textAreaRef }) {
+function TimerForm({ textareaRef }) {
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [wpm, setWpm] = useState(null);
 
@@ -19,18 +19,20 @@ function TimerForm({ textAreaRef }) {
   }, [timeRemaining]);
 
   useEffect(() => {
-    if (!timeRemaining) {
-      textAreaRef.current.blur();
-      textAreaRef.current.disabled = true;
+    if (textareaRef.current.value && !timeRemaining) {
+      setWpm(() => calcWPM(textareaRef.current.value));
+      textareaRef.current.blur();
+      textareaRef.current.disabled = true;
     }
-  });
+  }, [textareaRef, timeRemaining]);
 
   function handleSubmit(event) {
     event.preventDefault();
     setTimeRemaining(event.target.elements[0].value);
 
-    textAreaRef.current.disabled = false;
-    textAreaRef.current.focus();
+    textareaRef.current.value = "";
+    textareaRef.current.disabled = false;
+    textareaRef.current.focus();
   }
 
   return (
@@ -42,11 +44,7 @@ function TimerForm({ textAreaRef }) {
 }
 
 TimerForm.propTypes = {
-  textAreaRef: PropTypes.object,
-};
-
-TimerForm.defaultProps = {
-  textAreaRef: null,
+  textareaRef: PropTypes.shape({ current: PropTypes.element }).isRequired,
 };
 
 export default TimerForm;
