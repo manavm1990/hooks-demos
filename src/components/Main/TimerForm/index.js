@@ -24,7 +24,7 @@ function TimerForm() {
   return (
     <>
       <Form handler={handleSubmit} />
-      {timeRemaining ? <Info secs={Number(timeRemaining)} wpm={wpm} /> : ""}
+      <Info secs={Number(timeRemaining)} wpm={wpm} />
     </>
   );
 }
