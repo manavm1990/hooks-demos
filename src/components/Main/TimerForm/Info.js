@@ -18,6 +18,6 @@ function Info({ secs, wpm }) {
 
 Info.propTypes = { secs: PropTypes.number, wpm: PropTypes.number };
 
-Info.defaultProps = { secs: null, wpm: null };
+Info.defaultProps = { secs: 0, wpm: 0 };
 
 export default Info;
