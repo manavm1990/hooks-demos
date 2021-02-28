@@ -14,8 +14,11 @@ function TimerForm({ textAreaRef }) {
       }, 1000);
 
       return () => clearInterval(intervalId);
+    } else {
+      textAreaRef.current.blur();
+      textAreaRef.current.disabled = true;
     }
-  }, [timeRemaining]);
+  }, [textAreaRef, timeRemaining]);
 
   function handleSubmit(event) {
     event.preventDefault();
